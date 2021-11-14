@@ -5,6 +5,19 @@ const { v4: uuidv4 } = require('uuid');
 const books = JSON.parse(fs.readFileSync(`${__dirname}/../data/books.json`));
 
 
+exports.checkID = (req, res, next, val) => {
+    console.log(`Book Id is : ${val}`)
+    const id = req.params.id
+    const book = books.find(el => el.id === id)
+    if(!book) {
+        return res.status(404).json({
+            status: 'Fail',
+            message: 'Invalid Format ID'
+        })
+    }
+    next();
+}
+
 exports.getAllBooks = (req, res) => {
     console.log(req.requestTime)
     res.status(200).json({
@@ -43,35 +56,20 @@ exports.createBook = (req, res) => {
         
 }
 exports.getBook =  (req, res) => {
-    
-        console.log(req.params);
-    
-        const id = req.params.id
-    
-        const book = books.find(el => el.id === id)
-        if (!book) {
-           return res.status(404).send('Data not found')
+    const id = req.params.id
+    const book = books.find(el => el.id === id)
+    res.status(200).json({
+        status: 'Success',
+        data: {
+            book
         }
-        res.status(200).json({
-            status: 'Success',
-            data: {
-                book
-            }
-        })
+    })
 }
 
 
 exports.updateBook = (req, res) =>{
-
     const id = req.params.id
-
     const book = books.find(el => el.id === id)
-
-    if (!book) {
-        return res.send('Data not found')
-    }
-
-
     res.status(200).json({
         status: 'Succes',
         data: {
@@ -82,13 +80,7 @@ exports.updateBook = (req, res) =>{
 
 exports.deleteBook = (req, res) => {
     const id = req.params.id
-
     const book = books.find(el => el.id === id)
-
-    if (!book) {
-        return res.send('Data not found')
-    }
-
     res.status(204).json({
         status: 'Success',
         data: null
