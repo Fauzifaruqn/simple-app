@@ -12,7 +12,6 @@ const app = express();
 app.use(morgan('dev'))
 
 
-
 app.use(express.json())
 
 app.use((req,res,next) => {
@@ -138,6 +137,46 @@ const deleteBook = (req, res) => {
 }
 
 
+const getAllUser = (req,res) => {
+    res.status(500).json({
+        status: 'Error',
+        message: 'This is route is not yet defined'
+    })
+  
+}
+
+const createUser = (req,res) => {
+    res.status(500).json({
+        status: 'Error',
+        message: 'This is route is not yet defined'
+    })
+  
+}
+
+const getUser = (req,res) => {
+    res.status(500).json({
+        status: 'Error',
+        message: 'This is route is not yet defined'
+    })
+  
+}
+
+const updateUser = (req,res) => {
+    res.status(500).json({
+        status: 'Error',
+        message: 'This is route is not yet defined'
+    })
+  
+}
+
+const deleteUser = (req,res) => {
+    res.status(500).json({
+        status: 'Error',
+        message: 'This is route is not yet defined'
+    })
+  
+}
+
 // app.get('/api/v1/books', getAllBooks)
 // app.post('/api/v1/books', createBook)
 // app.get(`/api/v1/books/:id`, getBook)
@@ -145,22 +184,38 @@ const deleteBook = (req, res) => {
 // app.delete('/api/v1/books/:id', deleteBook)
 
 
-
-
 // 3) Routes
-app
-    .route('/api/v1/books')
+
+
+const bookRouter = express.Router();
+const userRouter = express.Router();
+
+
+bookRouter
+    .route('/')
     .get(getAllBooks)
     .post(createBook);
 
 
-app
-    .route('/api/v1/books/:id')
+bookRouter
+    .route('/:id')
     .get(getBook)
     .patch(updateBook)
     .delete(deleteBook)
 
+userRouter
+    .route('/')
+    .get(getAllUser)
+    .post(createUser)
 
+userRouter
+    .route('/:id')
+    .get(getUser)
+    .patch(updateUser)
+    .delete(deleteUser)
+
+app.use('/api/v1/books', bookRouter)
+app.use('/api/v1/users', userRouter)
 
 // 4) start server
 
