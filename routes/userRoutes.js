@@ -10,6 +10,9 @@ router
     .post('/register', authController.register);
 
 router
+    .post('/login', authController.login);
+
+router
     .route('/')
     .get(userController.getAllUser)
     .post(userController.createUser)

@@ -2,12 +2,12 @@ const express = require('express')
 const bookController = require('../controllers/bookControllers')
 const router = express.Router();
 // const bookRouter = express.Router();
-
+const authController = require('../controllers/authController')
 
 router.param('id', bookController.checkID)
 router
     .route('/')
-    .get(bookController.getAllBooks)
+    .get(authController.protect, bookController.getAllBooks)
     .post(bookController.checkBody, bookController.createBook);
 
 
